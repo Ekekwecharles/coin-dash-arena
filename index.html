@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>Coin Dash Arena</title>
+  <meta name="description" content="A three.js arena game on start.ng. Grab coins to keep the clock alive, dodge the spike balls, and play as your own start.ng character.">
+  <meta name="theme-color" content="#1b1d3a">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/bungee-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="scene" aria-label="Coin Dash Arena game"></canvas>
+
+  <!-- start.ng profile card: face, character name, @account -->
+  <div class="startng-card" id="player-card" hidden>
+    <div class="face"><img id="player-face" alt=""><span id="player-initial">G</span></div>
+    <div class="who">
+      <b id="player-name">Guest</b>
+      <span id="player-account">Not signed in</span>
+    </div>
+    <button id="player-sign-in" class="pill" hidden>Sign in</button>
+  </div>
+
+  <button id="mute" class="icon-btn" aria-label="Sound on" title="Sound">
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4z"/><path id="mute-waves" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/><path id="mute-x" hidden fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16 9l5 6M21 9l-5 6"/></svg>
+  </button>
+
+  <div id="hud" hidden>
+    <div class="timer" id="timer">
+      <span class="timer-label">Time</span>
+      <b id="hud-time">0:30</b>
+      <div class="timer-bar"><i id="hud-bar"></i></div>
+    </div>
+    <div class="hud-stats">
+      <div class="hud-coins"><span class="coin-dot"></span><b id="hud-coins">0</b></div>
+      <div class="hud-survived">Survived <b id="hud-survived">0:00</b></div>
+    </div>
+    <div class="dash-meter" id="dash-meter"><i id="dash-fill"></i><span>Dash</span></div>
+    <p class="hint" id="hint">WASD or arrows to move &middot; Space to dash</p>
+  </div>
+
+  <div id="overlay">
+    <div class="column">
+      <section class="panel" id="menu">
+        <p class="eyebrow">A start.ng game &middot; built with three.js</p>
+        <h1>Coin Dash<span>Arena</span></h1>
+        <p class="tagline">Grab coins to keep the clock alive. Dodge the spike balls. Last as long as you can.</p>
+        <div class="playing-as">
+          <span class="label">Playing as</span>
+          <b id="menu-name">Loading your character&hellip;</b>
+        </div>
+        <div class="signin-note" id="menu-signin" hidden>
+          <p id="menu-signin-text">Sign in on start.ng to play as your own character and save your best run.</p>
+          <button class="ghost" id="menu-signin-btn">Sign in with start.ng</button>
+        </div>
+        <button class="play" id="play-btn" disabled>Play</button>
+        <ul class="rules">
+          <li><span class="coin-dot"></span>Coin: +1 point, +1.5s</li>
+          <li><span class="orb-dot"></span>Time orb: +5s</li>
+          <li><span class="spike-dot"></span>Spike ball: &minus;5s</li>
+          <li><kbd>Space</kbd> Dash through danger</li>
+        </ul>
+      </section>
+
+      <section class="panel" id="over" hidden>
+        <p class="eyebrow">Time's up</p>
+        <h2>Run over</h2>
+        <div class="results">
+          <div><b id="over-coins">0</b><span>coins</span></div>
+          <div><b id="over-survived">0:00</b><span>survived</span></div>
+        </div>
+        <p class="over-message" id="over-message"></p>
+        <button class="play" id="again-btn">Play again</button>
+        <button class="ghost" id="over-signin-btn" hidden>Sign in to save your runs</button>
+      </section>
+
+      <section class="panel board-panel">
+        <div class="board-head">
+          <h3>Leaderboard</h3>
+          <span>coins &middot; time</span>
+        </div>
+        <ol id="board"></ol>
+        <p class="board-note" id="board-note">Loading&hellip;</p>
+      </section>
+    </div>
+  </div>
+
+  <div id="touch" hidden>
+    <div id="stick"><div id="knob"></div></div>
+    <button id="dash-btn" aria-label="Dash">Dash</button>
+  </div>
+
+  <div id="popups" aria-hidden="true"></div>
+  <div id="cover-title" aria-hidden="true">Coin Dash<span>Arena</span></div>
+
+  <script type="module" src="./game.js"></script>
+</body>
+</html>
